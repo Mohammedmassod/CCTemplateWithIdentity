@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model UserVM
+
+@inject UserManager<Users> usermanger;
+@{
+    var user = usermanger.GetUserAsync(User).Result;
+    if (user == null)
+    {
+        user = new Users();
+    }
+}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>تفاصيل المستخدم</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="IndexUser" >الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"><a asp-action="Details" > المستخدم </a> </li>
+                <li class="breadcrumb-item active">تفاصيل المستخدم</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="~/assets/img/avatars/1.png" alt="Profile" class="rounded-circle">
+                        <h2>@Model.Name</h2>
+                        <h3>@Model.UserName</h3>
+                      
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">البيانات الاساسية</button>
+                            </li>
+                            @if (await usermanger.IsInRoleAsync(user, "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">تعديل</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Users" asp-action="UpdateUserRoles" asp-route-id="@Model.Id">الصلاحيات</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Users" asp-action="ChPass" asp-route-id="@Model.Id">تغيير كلمة المرور</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Users" asp-action="ChangePass2">تغيير كلمة المرور</a>
+                                </li>
+                            }
+
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                <h5 class="card-title">تفاصيل الحساب</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">اسم المستخدم</div>
+                                    <div class="col-lg-9 col-md-8">@Model.UserName</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">الاسم </div>
+                                    <div class="col-lg-9 col-md-8">@Model.Name</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">رقم الهاتف</div>
+                                    <div class="col-lg-9 col-md-8">@Model.PhoneNumber</div>
+                                </div>
+                                
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

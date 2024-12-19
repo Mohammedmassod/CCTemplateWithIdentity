@@ -1,0 +1,123 @@
+﻿@model UserVM
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>بيانات المستخدمين</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"> المستخدم  </li>
+                <li class="breadcrumb-item active">تعديل</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="~/assets/img/avatars/1.png" alt="Profile" class="rounded-circle">
+                        <h2>@Model.Name</h2>
+                        <h3>@Model.UserName</h3>
+                       
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+
+
+
+                            <li class="nav-item">
+                                <a class="nav-link " asp-action="Details" asp-route-isAct="@Model.Id">البيانات الاساسية</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link active" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">تعديل</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Users" asp-action="UpdateUserRoles" asp-route-id="@Model.Id">الصلاحيات</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link  " asp-controller="Users" asp-action="ChangePass" asp-route-id="@Model.Id">تغيير كلمة المرور</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2 ">
+                            <div class="tab-focus fade pt-3 show" id="">
+
+                                <!-- Profile Edit Form -->
+                                <form method="post" asp-action="Edit">
+                                    <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="~/assets/img/avatars/1.png" alt="Profile">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   
+                                    <div class="row mb-3">
+                                        <label asp-for="UserName" class="col-md-4 col-lg-3 col-form-label">اسم المستخدم</label>
+                                        <span class="alert-danger" asp-validation-for="UserName"></span>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input asp-for="UserName" type="text" class="form-control" id="fullName">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label asp-for="Name" class="col-md-4 col-lg-3 col-form-label">الاسم</label>
+                                        <span class="alert-danger" asp-validation-for="Name"></span>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input asp-for="Name" type="text" class="form-control" id="fullName">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">رقم الهاتف</label>
+                                        <span class="alert-danger" asp-validation-for="PhoneNumber"></span>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input asp-for="PhoneNumber" type="text" class="form-control" id="fullName">
+                                        </div>
+                                    </div>
+                                    
+
+                                   
+
+
+
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">حفظ</button>
+                                        <button type="reset" class="btn btn-secondary">الغاء</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+
+
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

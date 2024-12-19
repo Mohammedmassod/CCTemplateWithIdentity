@@ -1,0 +1,37 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Home Page";
+    //var deviceId = Context.Session.GetString("deviceId");
+    var deviceId = HttpContextAccessor.HttpContext.Session.GetString("deviceId");
+    if (deviceId == null)
+{
+    <p>No device ID found in session.</p>
+}
+else
+{
+    <p>Device ID: @deviceId</p>
+}
+}
+
+<div class="text-center">
+  <div>
+        @if (@HttpContextAccessor.HttpContext.Session.Keys.Count() == 0)
+{
+    <p>This is an empty session.</p>
+}
+else
+{
+    <p>This session contains data.</p>
+  //GetDeviceId()
+
+}
+
+      <p>Session ID: @HttpContextAccessor.HttpContext.Session.Id </p>
+      <p>معرّف الجهاز: @deviceId</p>
+@*            <p>Session ID: @HttpContextAccessor.HttpContext.Session.GetDeviceId() </p>
+*@        @*Welcome, @HttpContextAccessor.HttpContext.Session.GetString("Name")!*@
+    </div>    <h1 class="display-4">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("Name")!</h1>
+    <h5 class="display-4">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("PhoneNumber")!</h5>
+
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

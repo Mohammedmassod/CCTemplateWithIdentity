@@ -1,0 +1,52 @@
+﻿{
+  /*يعد dotnet run مثاليًا للتطوير عندما تريد بدء تشغيل سريع
+يمنحك IIS Express المزيد من بيئة IIS ، على حساب بعض الأداء
+للنشر في الإنتاج ، ستحتاج إلى نشر تطبيق ASP.NET Core على خادم IIS كامل ، وليس IIS Express. 
+  لكن IIS Express مفيد لاختبار كيفية تشغيل تطبيقك على IIS أثناء التطوير. */
+  //يتم استخدام عناوين URL الخاصة بـ iisSettings عند التشغيل في IIS Express
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:38138",
+      "sslPort": 44382
+    }
+  },
+  /* لكي يكون الوصول على مستوى الشبكة المحلية
+  "profiles": {
+  "YourProfileName": {
+    "commandName": "Project",
+    "launchBrowser": true,
+    "applicationUrl": "http://yourIPAddress:port",
+    ...
+  }
+}*/
+  //يتم استخدام عناوين URL لملفات التعريف عند التشغيل مع تشغيل dotnet
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://192.168.43.141:44382",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7277;http://localhost:5287",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

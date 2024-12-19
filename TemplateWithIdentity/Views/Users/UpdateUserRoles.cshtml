@@ -1,0 +1,112 @@
+﻿@model RolesInUserVM
+
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>بيانات المستخدمين</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"> المستخدم  </li>
+                <li class="breadcrumb-item active">منح / الغاء صلاحيات </li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="~/assets/img/avatars/1.png" alt="Profile" class="rounded-circle">
+                        <h2>@Model.Name</h2>
+                        <h3>@Model.UserName</h3>
+                       
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <a class="nav-link " asp-action="Details" asp-route-isAct="@Model.Id">البيانات الاساسية</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">تعديل</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" asp-controller="Users" asp-action="UpdateUserRoles" asp-route-id="@Model.Id">الصلاحيات</button>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active " data-bs-toggle="tab" data-bs-target="#profile-change-password">تغيير كلمة المرور</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="tab-pane fade pt-3 show" id="profile-settings">
+
+                            <!-- Settings Form -->
+                            <form method="post" asp-controller="Users" asp-action="UpdateUserRoles">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="UserName" />
+                                
+                                
+                                    <div class="row mb-3">
+                                        
+                                        <div class="col-md-8 col-lg-9">
+                                            @for (var i = 0; i < @Model.RolesList.Count(); i++)
+                                            {
+                                                
+                                                    <input type="hidden" asp-for="RolesList[i].RoleId" />
+                                                    <input type="hidden" asp-for="RolesList[i].Id" />
+                                                    <input type="hidden" asp-for="RolesList[i].RoleName" />
+                                                    <input type="hidden" asp-for="RolesList[i].Name_Ar" />
+                                                   
+
+                                                    <div class="form-check">
+                                                        <input asp-for="RolesList[i].IsSelected" class="form-check-input" type="checkbox" id="changesMade">
+                                                        <label class="form-check-label" asp-for="RolesList[i].IsSelected">
+                                                            @Model.RolesList[i].Name_Ar
+                                                        </label>
+                                                    </div>
+                                                }
+
+
+                                            
+
+                                        </div>
+                                    </div>
+                                
+
+
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">حفظ</button>
+                                </div>
+                            </form><!-- End settings Form -->
+
+                        </div>
+
+
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main><!-- End #main -->
