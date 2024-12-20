@@ -26,6 +26,12 @@ namespace TemplateWithIdentity.Controllers
 
             // تمرير الصلاحيات إلى العرض
             ViewData["Roles"] = roles;
+
+            // استرجاع الاذونات من الجلسة
+            var permissionsString = HttpContext.Session.GetString("UserPermissions");
+            var permissions = permissionsString?.Split(',') ?? Array.Empty<string>();
+            ViewData["Permissions"] = permissions;
+
             // تنفيذ العمليات اللازمة هنا
             return View();
             
