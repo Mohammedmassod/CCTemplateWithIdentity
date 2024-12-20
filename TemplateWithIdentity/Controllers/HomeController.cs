@@ -20,8 +20,14 @@ namespace TemplateWithIdentity.Controllers
 /*        [Route("kldfjfvlkdfaskhndfavjkn")]
 */        public IActionResult Index()
         {
-             // تنفيذ العمليات اللازمة هنا
-                return View();
+            // استرجاع الصلاحيات من الجلسة
+            var rolesString = HttpContext.Session.GetString("UserRoles");
+            var roles = rolesString?.Split(',') ?? Array.Empty<string>();
+
+            // تمرير الصلاحيات إلى العرض
+            ViewData["Roles"] = roles;
+            // تنفيذ العمليات اللازمة هنا
+            return View();
             
             
         }

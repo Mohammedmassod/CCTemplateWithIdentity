@@ -1,15 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<Users> usermanger
-@inject SignInManager<Users> SignInManager
+@* @inject UserManager<Users> usermanger *@
+@* @inject SignInManager<Users> SignInManager *@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-@{
-    var U = await usermanger.GetUserAsync(User);
-    if (U == null || @HttpContextAccessor.HttpContext.Session.Keys.Count() == 0) //اذا انتهت الجلسة ينهي النظام المصادقة
-    {
-         await SignInManager.SignOutAsync(); 
-    }
-}
+@* @{ *@
+@*     var U = await usermanger.GetUserAsync(User); *@
+@*     if (U == null || @HttpContextAccessor.HttpContext.Session.Keys.Count() == 0) //اذا انتهت الجلسة ينهي النظام المصادقة *@
+@*     { *@
+@*          await SignInManager.SignOutAsync();  *@
+@*     } *@
+@* } *@
 
 <li class="nav-item navbar-dropdown dropdown-user dropdown">
     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -27,8 +27,8 @@
                         </div>
                     </div>
                     <div class="flex-grow-1">
-                        <span class="lh-1 d-block fw-semibold">@U.UserName</span>
-                        <small>@U.Name</small>
+                        <span class="lh-1 d-block fw-semibold"></span>
+                        <small></small>
                     </div>
                 </div>
             </a>
@@ -49,7 +49,7 @@
             </a>
         </li>*@
         <li>
-            <a class="dropdown-item" asp-controller="Users" asp-action="ChPass2" asp-route-id="@U.Id">
+            <a class="dropdown-item" asp-controller="Users" asp-action="ChPass2">
                 <i class="bx bx-cog me-2"></i>
                 <span class="align-middle">تغيير كلمة السر</span>
             </a>

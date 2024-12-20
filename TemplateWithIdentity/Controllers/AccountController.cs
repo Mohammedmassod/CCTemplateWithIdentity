@@ -8,23 +8,23 @@ using Microsoft.AspNetCore.DataProtection;
 using NuGet.Protocol.Plugins;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using NuGet.Common;
+using TemplateWithIdentity.Helper;
 
 namespace TemplateWithIdentity.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<Users> signInManager;
-        private readonly UserManager<Users> userManager;
+
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly HttpClient _httpClient;
 
 
 
-        public AccountController(SignInManager<Users> signInManager,UserManager<Users> userManager, 
+        public AccountController(
             IDataProtectionProvider dataProtectionProvider, IHttpClientFactory httpClientFactory)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
+
             _dataProtectionProvider = dataProtectionProvider;
             _httpClient = httpClientFactory.CreateClient("MyClient");
 
@@ -73,8 +73,10 @@ namespace TemplateWithIdentity.Controllers
                     //var tokenHandler = new JwtSecurityTokenHandler();
                     //var token = HttpContext.Session.GetString("JwtToken");
                     //var jwtToken = tokenHandler.ReadJwtToken(token);
-                   // var username = jwtToken.Claims.First(claim => claim.Type == "Admin").Value;
-
+                    // var username = jwtToken.Claims.First(claim => claim.Type == "Admin").Value;
+                   /// استخراج الصلاحيات وتخزينها في الجلسة
+            var roles = JwtHelper.GetRolesFromToken(result1.Token);
+                    HttpContext.Session.SetString("UserRoles", string.Join(",", roles));
 
                     var existingDeviceId = HttpContext.Session.GetString("DeviceId");
                     if (!string.IsNullOrEmpty(existingDeviceId) && existingDeviceId != GetDeviceId())
@@ -193,7 +195,7 @@ namespace TemplateWithIdentity.Controllers
         public async Task<ActionResult> Logout()
         {
             // Remove current device id from session
-            await signInManager.SignOutAsync();
+            //await signInManager.SignOutAsync();
             HttpContext.Session.Clear();
             HttpContext.Session.Remove("id");
             HttpContext.Session.Remove("Name");

@@ -15,12 +15,12 @@ namespace TemplateWithIdentity.ViewModels
         {
             
         }
-        public ProfileVM(Users user)
-        {
-            Id = user.Id;
-            Name = user.Name;
-            UserName = user.UserName;
+        //public ProfileVM(Users user)
+        //{
+        //    Id = user.Id;
+        //    Name = user.Name;
+        //    UserName = user.UserName;
 
-        }
+        //}
     }
 }

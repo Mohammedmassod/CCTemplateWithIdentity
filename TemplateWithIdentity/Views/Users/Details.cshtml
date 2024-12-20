@@ -1,14 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model UserVM
 
-@inject UserManager<Users> usermanger;
-@{
-    var user = usermanger.GetUserAsync(User).Result;
-    if (user == null)
-    {
-        user = new Users();
-    }
-}
+@* @inject UserManager<Users> usermanger; *@
+@* @{ *@
+@*     var user = usermanger.GetUserAsync(User).Result; *@
+@*     if (user == null) *@
+@*     { *@
+@*         user = new Users(); *@
+@*     } *@
+@* } *@
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -49,8 +49,8 @@
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">البيانات الاساسية</button>
                             </li>
-                            @if (await usermanger.IsInRoleAsync(user, "Admin"))
-                            {
+                            @* @if (await usermanger.IsInRoleAsync(user, "Admin")) *@
+                            @* { *@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">تعديل</a>
                                 </li>

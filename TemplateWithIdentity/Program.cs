@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using TemplateWithIdentity.Data;
 using System.Net.Http.Headers;
 using TemplateWithIdentity.Models;
 var builder = WebApplication.CreateBuilder(args);
@@ -17,19 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDataProtection()
   .SetApplicationName("TemplateWithIdentity");
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("defualtConnection")));
 
-builder.Services.AddIdentity<Users, Roles >(option => {
-    option.Password.RequireUppercase = false; option.Password.RequiredLength = 6;
-    option.Password.RequireDigit = false; option.Password.RequireNonAlphanumeric = false;
-    option.Password.RequireUppercase = false; option.Password.RequireLowercase = false;
-    //قفل حساب المستخدم لمدة 1دقائق اذا حاول تسجيل الدخول اكثر من خمس مرات خاطئة
-    option.Lockout.AllowedForNewUsers = true;
-    option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-    option.Lockout.MaxFailedAccessAttempts = 5;
-  
-
-}).AddEntityFrameworkStores<AppDbContext>();
 
 //builder.Services.AddCors();
 builder.Services.AddHttpClient("MyClient", client =>
@@ -105,7 +92,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<SignInManager<Users>>();
 
 var app = builder.Build();
 
