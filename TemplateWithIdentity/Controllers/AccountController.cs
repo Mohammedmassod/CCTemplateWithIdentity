@@ -70,13 +70,14 @@ namespace TemplateWithIdentity.Controllers
                     // Store the token (e.g., in session or local storage)
                     HttpContext.Session.SetString("JwtToken", result1.Token);
 
-                    //var tokenHandler = new JwtSecurityTokenHandler();
-                    //var token = HttpContext.Session.GetString("JwtToken");
-                    //var jwtToken = tokenHandler.ReadJwtToken(token);
-                    // var username = jwtToken.Claims.First(claim => claim.Type == "Admin").Value;
-                   /// استخراج الصلاحيات وتخزينها في الجلسة
-            var roles = JwtHelper.GetRolesFromToken(result1.Token);
+
+                    // Extract roles and permissions from token
+                    var roles = JwtHelper.GetRolesFromToken(result1.Token);
+                    var permissions = JwtHelper.GetPermissionsFromToken(result1.Token);
+
                     HttpContext.Session.SetString("UserRoles", string.Join(",", roles));
+                    HttpContext.Session.SetString("UserPermissions", string.Join(",", permissions));
+
 
                     var existingDeviceId = HttpContext.Session.GetString("DeviceId");
                     if (!string.IsNullOrEmpty(existingDeviceId) && existingDeviceId != GetDeviceId())
@@ -84,23 +85,7 @@ namespace TemplateWithIdentity.Controllers
                         ModelState.AddModelError(string.Empty, "You are already logged in from another browser.");
                         return View(login);
                     }
-                 /*   HttpContext.Session.SetString("deviceId", GetDeviceId());
-                    //اذا استخدمنا الثانية
-                    var deviceId = GetDeviceId();
-                  
-
-                    if (IsLoggedInFromAnotherDevice() == deviceId)
-                    {
-                        ModelState.AddModelError(string.Empty, "تم تسجيل الدخول من جهاز آخر.");
-                        return View(login);
-                    }
-                    HttpContext.Session.SetString("DeviceId", deviceId);*/
-                   /* var tokenHandler = new JwtSecurityTokenHandler();
-                    var jwtToken = tokenHandler.ReadJwtToken(token);
-                    var username = jwtToken.Claims.First(claim => claim.Type == "unique_name").Value;
-                    var username = jwtToken.Claims.First(claim => claim.Type == "unique_name").Value;*/
-
-
+                 
                     string Name = (login.UserName);
                     string PhoneNumber = (login.UserName);
                     //Store the protected values in the session
@@ -112,79 +97,13 @@ namespace TemplateWithIdentity.Controllers
                 }
                 else {
 
-                    /*if (result.Succeeded)
-                    {
-                        // store the user name in session
-                        var user = await userManager.FindByNameAsync(login.UserName);
-                        if (user != null && await userManager.CheckPasswordAsync(user, login.Pass))
-                        {
-                            // Check if user is already logged in from another browser
-                            var existingDeviceId = HttpContext.Session.GetString("DeviceId");
-                            if (!string.IsNullOrEmpty(existingDeviceId) && existingDeviceId != GetDeviceId())
-                            {
-                                ModelState.AddModelError(string.Empty, "You are already logged in from another browser.");
-                                return View(login);
-                            }
-                            HttpContext.Session.SetString("deviceId", GetDeviceId());
-
-                            //اذا استخدمنا الثانية
-                            var deviceId = GetDeviceId();
-
-                            //// تحقق من عدم تسجيل الدخول من جهاز آخر باستخدام معرف الجهاز المستخدم الحالي
-                            //if (IsLoggedInFromAnotherDevice(deviceId))
-                            //{
-                            //    ModelState.AddModelError(string.Empty, "تم تسجيل الدخول من جهاز آخر.");
-                            //    return View(model);
-                            //}
-
-                            // تسجيل الدخول
-                            // ...
-
-                            // تخزين معرف الجهاز في الجلسة
-                            HttpContext.Session.SetString("DeviceId", deviceId);
-
-                            // توجيه المستخدم إلى الصفحة الرئيسية
-                            return RedirectToAction("Index", "Home");
-                        }
-
-                        //private bool IsLoggedInFromAnotherDevice(string currentDeviceId)
-                        //{
-                        //    // استعلام قاعدة البيانات أو ذاكرة التخزين المؤقت للتحقق من عدم تسجيل الدخول من جهاز آخر باستخدام معرف الجهاز الحالي
-                        //    // ...
-                        //}
-
-                        //
-                        // Store device id in session
-                        //var protector = _dataProtectionProvider.CreateProtector("UserProperties");
-                        //لكي تحفظها مشفرة داخل الجلسة
-                        // Protect the user's name and email before storing them in the session
-                        //string protectedName = protector.Protect(user.Name);
-                        //string protectedPhoneNumber = protector.Protect(user.PhoneNumber);
-                        //string Name = (user.Name);
-                        //string PhoneNumber = (user.PhoneNumber);
-
-
-                        //Store the protected values in the session
-                        //HttpContext.Session.SetString("Name", Name);
-                        //HttpContext.Session.SetString("PhoneNumber", PhoneNumber);
-                    }*/
+                  
                     ModelState.AddModelError(string.Empty, "اسم المستخدم او كلمة السر خطاء ");
                     return View(login);
 
                 }
 
             }
-
-            // اذا تقفل الحساب ماذا يفعل النظام
-            //if (result.IsLockedOut)
-            //{
-            //    /*var forgotPassLink = Url.Action(nameof(ForgotPassword), "Account", new { }, Request.Scheme);
-            //    var content = string.Format("Your account is locked out, to reset your password, please click this link: {0}", forgotPassLink);
-            //    var message = new Message(new string[] { userModel.Email }, "Locked out account information", content, null);
-            //    await _emailSender.SendEmailAsync(message);*/
-            //    ModelState.AddModelError("", "تم قفل الحساب");
-            //    return View();
-            //}
             else
                 {
                     ModelState.AddModelError(string.Empty, "اسم المستخدم او كلمة السر خطاء ");
