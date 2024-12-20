@@ -23,14 +23,14 @@ namespace TemplateWithIdentity.ViewModels
                 
         }
 
-        public UserVM(Users users)
-        {
-            Id= users.Id;
-            UserName = users.UserName;
-            Name=users.Name;
-            PhoneNumber = users.PhoneNumber;
-            isClient = users.IsClient;
+        //public UserVM(Users users)
+        //{
+        //    Id= users.Id;
+        //    UserName = users.UserName;
+        //    Name=users.Name;
+        //    PhoneNumber = users.PhoneNumber;
+        //    isClient = users.IsClient;
             
-        }
+        //}
     }
 }
