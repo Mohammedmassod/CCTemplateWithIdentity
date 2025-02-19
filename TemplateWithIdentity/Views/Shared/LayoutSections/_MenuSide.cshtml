@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
+@using TemplateWithIdentity.Helper
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
@@ -19,31 +20,32 @@
     <div class="menu-inner-shadow"></div>
     @* استرجاع الصلاحيات من ViewData *@
     @{
-        var roles = ViewData["Roles"] as string[];
-        var permissions = ViewData["Permissions"] as string[];
+        // JwtHelper
+        var roles = HttpContextAccessor.HttpContext.Session.GetString("UserRoles");
+        var permissions = HttpContextAccessor.HttpContext.Session.GetString("UserPermissions");
     }
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
-        <li class="menu-item open active">
+        <li class="menu-item ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="بيانات المستخدمين">بيانات المستخدمين</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a asp-controller="Users" asp-action="Index" class="menu-link">
                         <div data-i18n="عرض ">عرض </div>
                     </a>
                 </li>
-                @if (roles != null && roles.Contains("Admin") && permissions != null && permissions.Contains("Client:View"))
+                @if (roles != null && roles.Equals("Admin") && permissions != null && permissions.Equals("Client:View"))
                 {
-                    <li class="menu-item active">
+                    <li class="menu-item ">
                         <a asp-controller="Users" asp-action="Index" class="menu-link">
                             <div data-i18n="عرض ">عرض </div>
                         </a>
                     </li>
                 } 
-                @if (roles != null && roles.Contains("User") && permissions != null && permissions.Contains("Client:Edit"))
+                @if (roles != null && roles.Equals("User") && permissions != null && permissions.Equals("Client:Edit"))
                 {
                     <li class="menu-item">
                         <a asp-controller="Users" asp-action="Create" class="menu-link">
@@ -54,7 +56,7 @@
             </ul>
         </li>
 
-            <li class="menu-item open active">
+            <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <div data-i18n="بيانات القضاه">بيانات القضاه</div>

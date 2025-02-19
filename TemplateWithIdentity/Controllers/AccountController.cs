@@ -119,6 +119,8 @@ namespace TemplateWithIdentity.Controllers
             HttpContext.Session.Remove("id");
             HttpContext.Session.Remove("Name");
             HttpContext.Session.Remove("PhoneNumber");
+            HttpContext.Session.Remove("JwtToken");
+
 
             ViewBag.Message = "لقد تم تسجيل الخروج";
             return RedirectToAction("Login", "Account");

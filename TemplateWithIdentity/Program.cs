@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Net.Http.Headers;
 using TemplateWithIdentity.Models;
+using TemplateWithIdentity.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 //
 builder.Services.AddDataProtection()
@@ -127,7 +128,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseMiddleware<TokenMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
