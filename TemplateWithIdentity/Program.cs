@@ -12,22 +12,42 @@ using System.Text;
 using System.Net.Http.Headers;
 using TemplateWithIdentity.Models;
 using TemplateWithIdentity.Middleware;
+using TemplateWithIdentity.Service;
+using TemplateWithIdentity.Helper;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 //
 builder.Services.AddDataProtection()
   .SetApplicationName("TemplateWithIdentity");
 // Add services to the container.
+builder.Services.AddTransient<AuthorizationHandler>();
+
+builder.Services.AddHttpClient<ApiService<object>, ApiService<object>>() // تسجيل عام لأي كيان
+    .ConfigureHttpClient(client =>
+    {
+        client.BaseAddress = new Uri(ApiRoutes.BaseUrl);
+    })
+    .AddHttpMessageHandler<AuthorizationHandler>();
 
 
 //builder.Services.AddCors();
-builder.Services.AddHttpClient("MyClient", client =>
-{
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-});
+//builder.Services.AddHttpClient("MyClient", client =>
+//{
+//    client.BaseAddress = new Uri(ApiRoutes.BaseUrl);
+//    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+//}).ConfigurePrimaryHttpMessageHandler(() =>
+//{
+//    return new SocketsHttpHandler
+//    {
+//        PooledConnectionLifetime = TimeSpan.FromMinutes(5), // إعادة استخدام الاتصالات لمدة 5 دقائق قبل إعادة إنشائها
+//        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2), // إغلاق الاتصالات غير النشطة بعد دقيقتين
+//        MaxConnectionsPerServer = 10 // تحديد عدد الاتصالات المفتوحة لكل خادم
+//    };
+//}); 
 //اضافة خدمة حماية البيانات من اجل تشفير بيانات الجلسة وغيرها
 builder.Services.AddDataProtection();
 //
-
+builder.Services.AddScoped<HttpService>();
 builder.Services.AddControllersWithViews()
     .AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();

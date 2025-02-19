@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using NuGet.Common;
 using TemplateWithIdentity.Helper;
+using TemplateWithIdentity.Service;
 
 namespace TemplateWithIdentity.Controllers
 {
@@ -18,15 +19,18 @@ namespace TemplateWithIdentity.Controllers
 
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly HttpClient _httpClient;
+        private readonly HttpService _httpService;
 
 
 
         public AccountController(
-            IDataProtectionProvider dataProtectionProvider, IHttpClientFactory httpClientFactory)
+            IDataProtectionProvider dataProtectionProvider, IHttpClientFactory httpClientFactory,
+            HttpService httpService)
         {
 
             _dataProtectionProvider = dataProtectionProvider;
             _httpClient = httpClientFactory.CreateClient("MyClient");
+            _httpService = httpService;
 
         }
 
