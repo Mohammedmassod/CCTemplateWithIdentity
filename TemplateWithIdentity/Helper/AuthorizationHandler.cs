@@ -20,6 +20,7 @@ namespace TemplateWithIdentity.Helper
 
                 if (!string.IsNullOrEmpty(token))
                 {
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 }
             }
