@@ -47,7 +47,7 @@ builder.Services.AddHttpClient<ApiService<object>, ApiService<object>>() // تس
 //اضافة خدمة حماية البيانات من اجل تشفير بيانات الجلسة وغيرها
 builder.Services.AddDataProtection();
 //
-builder.Services.AddScoped<HttpService>();
+builder.Services.AddScoped<ApiService<object>>();
 builder.Services.AddControllersWithViews()
     .AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();

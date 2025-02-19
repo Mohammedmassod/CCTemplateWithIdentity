@@ -19,18 +19,16 @@ namespace TemplateWithIdentity.Controllers
 
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly HttpClient _httpClient;
-        private readonly HttpService _httpService;
 
 
 
         public AccountController(
-            IDataProtectionProvider dataProtectionProvider, IHttpClientFactory httpClientFactory,
-            HttpService httpService)
+            IDataProtectionProvider dataProtectionProvider, IHttpClientFactory httpClientFactory
+            )
         {
 
             _dataProtectionProvider = dataProtectionProvider;
             _httpClient = httpClientFactory.CreateClient("MyClient");
-            _httpService = httpService;
 
         }
 
